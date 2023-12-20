@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import validator from "validator"
-
+import bcryptjs from "bcryptjs"
 
 const userSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: [true, 'Name is Required'],
   },
@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     unique: true,
-    required: [true, 'Password is Required']
+    required: [true, 'Password is Required'],
+    select: false
   },
   profileImage: String,
   pofileThumbImage: String,
@@ -30,6 +31,18 @@ const userSchema = new mongoose.Schema({
     default: false
   }
 })
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next()
+  }
+  this.password = await bcryptjs.hash(this.password, 12)
+  next()
+})
+
+userSchema.methods.comparePasswordinDb = async (password: any, passwordDB: string) => {
+  return await bcryptjs.compare(password, passwordDB)
+}
 
 
 const user = mongoose.model('user', userSchema)

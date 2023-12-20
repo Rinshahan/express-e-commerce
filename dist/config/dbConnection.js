@@ -18,7 +18,7 @@ dotenv_1.default.config({ path: './config.env' });
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        const connect = yield mongoose_1.default.connect((_a = process.env.LOCAL_CONN_STR) !== null && _a !== void 0 ? _a : 'mongodb://localhost:27017/users');
+        const connect = yield mongoose_1.default.connect((_a = process.env.LOCAL_CONN_STR) !== null && _a !== void 0 ? _a : 'mongodb://localhost:27017/ecommerce');
         console.log(`MongoDB Connected : ${connect.connection.host}`);
     }
     catch (err) {
