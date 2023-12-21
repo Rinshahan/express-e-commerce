@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = exports.signUpUser = void 0;
-const userModel_1 = __importDefault(require("../models/userModel"));
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const customError_1 = __importDefault(require("../utils/customError"));
 const jsonwebtoken_1 = __importDefault(require("../utils/jsonwebtoken"));
+const userModel_1 = __importDefault(require("../models/userModel"));
 exports.signUpUser = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const newUser = yield userModel_1.default.create(req.body);
     const token = (0, jsonwebtoken_1.default)(newUser.email);
@@ -24,7 +24,7 @@ exports.signUpUser = (0, asyncErrorHandler_1.default)((req, res, next) => __awai
         status: "success",
         token,
         data: {
-            user: newUser
+            User: newUser
         }
     });
 }));

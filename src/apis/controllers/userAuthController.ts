@@ -1,19 +1,19 @@
 import { NextFunction, Request, Response } from "express";
-import user from "../models/userModel";
 import catchAsync from "../utils/asyncErrorHandler";
 import CustomError from "../utils/customError";
 import generateToken from "../utils/jsonwebtoken";
+import User from "../models/userModel";
 
 
 
 export const signUpUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const newUser = await user.create(req.body);
+  const newUser = await User.create(req.body);
   const token = generateToken(newUser.email)
   res.status(201).json({
     status: "success",
     token,
     data: {
-      user: newUser
+      User: newUser
     }
   });
 })
@@ -30,7 +30,7 @@ export const loginUser = catchAsync(async (req: Request, res: Response, next: Ne
 
   // check user exists with username
 
-  const loginUser = await user.findOne({ username }).select('+password')
+  const loginUser = await User.findOne({ username }).select('+password')
 
   const token = generateToken(loginUser.email)
 

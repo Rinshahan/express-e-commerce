@@ -48,6 +48,6 @@ userSchema.methods.comparePasswordinDb = async (password: any, passwordDB: strin
 }
 
 
-const user = mongoose.model<User>('user', userSchema)
+const User = mongoose.model<User>('User', userSchema)
 
-export default user
+export default User

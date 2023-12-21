@@ -56,5 +56,5 @@ userSchema.pre('save', function (next) {
 userSchema.methods.comparePasswordinDb = (password, passwordDB) => __awaiter(void 0, void 0, void 0, function* () {
     return yield bcryptjs_1.default.compare(password, passwordDB);
 });
-const user = mongoose_1.default.model('user', userSchema);
-exports.default = user;
+const User = mongoose_1.default.model('User', userSchema);
+exports.default = User;

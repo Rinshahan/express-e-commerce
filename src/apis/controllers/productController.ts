@@ -1,5 +1,5 @@
 import catchAsync from "../utils/asyncErrorHandler";
-import product from "../models/productModel";
+import Product from "../models/productModel";
 import { Request, Response } from "express";
 // const CreateProduct = catchAsync(async (req, res) => {
 //   const newProduct = await product.create(req.body)
@@ -13,7 +13,7 @@ import { Request, Response } from "express";
 
 
 const getProduct = catchAsync(async (req: Request, res: Response) => {
-  const products = await product.find()
+  const products = await Product.find()
   res.status(200).json({
     status: "success",
     data: {
@@ -25,7 +25,7 @@ const getProduct = catchAsync(async (req: Request, res: Response) => {
 
 
 const getProductById = catchAsync(async (req: Request, res: Response) => {
-  const productById = await product.findById(req.params.id)
+  const productById = await Product.findById(req.params.id)
 
 
   res.status(200).json({
@@ -40,7 +40,7 @@ const getProductById = catchAsync(async (req: Request, res: Response) => {
 
 const getProductByCategory = catchAsync(async (req: Request, res: Response) => {
   const category = req.params.category
-  const productByCategory = await product.find({ category })
+  const productByCategory = await Product.find({ category })
   if (productByCategory.length === 0) {
     throw new Error("Category is not found!!")
   } else {
