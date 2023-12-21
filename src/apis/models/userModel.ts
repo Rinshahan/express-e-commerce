@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import validator from "validator"
 import bcryptjs from "bcryptjs"
 
+
+
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -45,6 +48,6 @@ userSchema.methods.comparePasswordinDb = async (password: any, passwordDB: strin
 }
 
 
-const user = mongoose.model('user', userSchema)
+const user = mongoose.model<User>('user', userSchema)
 
 export default user

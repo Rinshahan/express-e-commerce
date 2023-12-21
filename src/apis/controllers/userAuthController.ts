@@ -34,7 +34,7 @@ export const loginUser = catchAsync(async (req: Request, res: Response, next: Ne
 
   const token = generateToken(loginUser.email)
 
-  if (!loginUser || !(await loginUser.comparePasswordinDb(password, loginUser.password)) {
+  if (!loginUser || !(await loginUser.comparePasswordinDb(password, loginUser.password))) {
     throw new Error("Incorrect username or Password")
   } else {
     res.status(200).json({

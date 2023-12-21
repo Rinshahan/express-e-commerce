@@ -1,6 +1,5 @@
 import express, { Express, Request, Response } from "express";
-import userRoutes from "./apis/routes/userRoutes"
-import authRouter from "./apis/routes/authRoutes";
+import authRouter from "./apis/routes/userAuthRoutes";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 
