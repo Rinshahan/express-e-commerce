@@ -1,13 +1,13 @@
 import express, { Express, Request, Response } from "express";
-import authRouter from "./apis/routes/userAuthRoutes";
 import morgan from "morgan";
 import bodyParser from "body-parser";
-
+import productRouter from "./apis/routes/productRoutes";
+import userAuthRouter from "./apis/routes/userAuthRoutes";
 const app: Express = express()
 app.use(bodyParser.json()),
   app.use(bodyParser.urlencoded({ extended: true }))
 app.use(morgan('dev'))
-app.use('/api/users', authRouter)
+app.use('/api/users', userAuthRouter, productRouter)
 
 // app.use((error: any, req: Request, res: Response, next: Function) => {
 //   error.statusCode = error.statusCode || 500

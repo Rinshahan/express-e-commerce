@@ -12,16 +12,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateProduct = void 0;
+exports.getProductByCategory = exports.getProductById = exports.getProduct = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const productModel_1 = __importDefault(require("../models/productModel"));
-const CreateProduct = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newProduct = yield productModel_1.default.create(req.body);
+// const CreateProduct = catchAsync(async (req, res) => {
+//   const newProduct = await product.create(req.body)
+//   res.status(200).json({
+//     status: "success",
+//     data: {
+//       newProduct
+//     }
+//   })
+// })
+const getProduct = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const products = yield productModel_1.default.find();
     res.status(200).json({
         status: "success",
         data: {
-            newProduct
+            products
         }
     });
 }));
-exports.CreateProduct = CreateProduct;
+exports.getProduct = getProduct;
+const getProductById = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const productById = yield productModel_1.default.findById(req.params.id);
+    res.status(200).json({
+        status: "success",
+        data: {
+            productById
+        }
+    });
+}));
+exports.getProductById = getProductById;
+const getProductByCategory = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const category = req.params.category;
+    const productByCategory = yield productModel_1.default.find({ category });
+    if (productByCategory.length === 0) {
+        throw new Error("Category is not found!!");
+    }
+    else {
+        res.status(200).json({
+            status: "successfull",
+            data: {
+                productByCategory
+            }
+        });
+    }
+}));
+exports.getProductByCategory = getProductByCategory;
