@@ -10,11 +10,13 @@ const cartSchema = new mongoose_1.default.Schema({
         required: true,
         ref: 'User'
     },
-    product: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Product'
-    }
+    product: [
+        {
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            required: true,
+            ref: 'Product'
+        }
+    ]
 });
 const Cart = mongoose_1.default.model('Cart', cartSchema);
 exports.default = Cart;
