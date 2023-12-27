@@ -20,8 +20,8 @@ const addProductCart = catchAsync(async (req: Request, res: Response) => {
       existCart.product.push(productId)
       existCart.save()
       res.status(200).json({
-        status:"success",
-        data:{
+        status: "success",
+        data: {
           existCart
         }
       })
@@ -41,8 +41,45 @@ const addProductCart = catchAsync(async (req: Request, res: Response) => {
   }
 })
 
-const getProductCart = catchAsync(async (req:Request,res:Response)=>{
-  const userId = req.params.userId
-  const getCart = await Cart.findOne({user:userId})
-  
+const getProductCart = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.params.id
+  const getCart = await Cart.findOne({ user: userId })
+
+  if (!getCart) {
+    throw new Error("No Products Found")
+  }
+  else {
+    res.status(200).json({
+      status: "success",
+      data: {
+        getCart
+      }
+    })
+  }
 })
+
+const deleteProductCart = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.params.id
+  const productId = req.body.product
+
+  const getCart = await Cart.findOne({ user: userId })
+
+  if (!getCart) {
+    throw new Error("Cart is not found")
+  } else {
+    const indexToDelete = getCart.product.indexOf(productId)
+    getCart.product.splice(indexToDelete, 1)
+    await getCart.save()
+    res.status(200).json({
+      status: "success"
+    })
+  }
+
+})
+
+
+export {
+  addProductCart,
+  getProductCart,
+  deleteProductCart
+}

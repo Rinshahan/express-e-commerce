@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteProductCart = exports.getProductCart = exports.addProductCart = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const productModel_1 = __importDefault(require("../models/productModel"));
 const cartModel_1 = __importDefault(require("../models/cartModel"));
@@ -54,7 +55,37 @@ const addProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(
         }
     }
 }));
+exports.addProductCart = addProductCart;
 const getProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const userId = req.params.userId;
+    const userId = req.params.id;
     const getCart = yield cartModel_1.default.findOne({ user: userId });
+    if (!getCart) {
+        throw new Error("No Products Found");
+    }
+    else {
+        res.status(200).json({
+            status: "success",
+            data: {
+                getCart
+            }
+        });
+    }
 }));
+exports.getProductCart = getProductCart;
+const deleteProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.id;
+    const productId = req.body.product;
+    const getCart = yield cartModel_1.default.findOne({ user: userId });
+    if (!getCart) {
+        throw new Error("Cart is not found");
+    }
+    else {
+        const indexToDelete = getCart.product.indexOf(productId);
+        getCart.product.splice(indexToDelete, 1);
+        yield getCart.save();
+        res.status(200).json({
+            status: "success"
+        });
+    }
+}));
+exports.deleteProductCart = deleteProductCart;

@@ -12,17 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config({ path: './config.env' });
-const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const connect = yield mongoose_1.default.connect(process.env.LOCAL_CONN_STR || 'mongodb://localhost:27017/ecommerce');
-        console.log(`MongoDB Connected : ${connect.connection.host}`);
-    }
-    catch (err) {
-        console.log(err);
-    }
-    ;
-});
-exports.default = connectDB;
+const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
+const protect = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    // Read the Token & check if it exist
+    next();
+}));
+exports.default = protect;
