@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import catchAsync from "../utils/asyncErrorHandler";
 import User from "../models/userModel";
+import { getUsers, getUsersById } from "../controllers/adminController";
 
-const getUsers = catchAsync(async (req: Request, res: Response) => {
-  const getUsers = await User.find()
-  console.log(getUsers);
+const adminRoutes = express.Router()
 
-})
+adminRoutes.route('/users')
+  .get(getUsers)
+
+adminRoutes.route('/users/:id')
+  .get(getUsersById)
+export default adminRoutes

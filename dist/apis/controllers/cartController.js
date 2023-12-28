@@ -14,78 +14,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteProductCart = exports.getProductCart = exports.addProductCart = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
-const productModel_1 = __importDefault(require("../models/productModel"));
+const productListService_1 = require("../services/productListService");
 const cartModel_1 = __importDefault(require("../models/cartModel"));
 const addProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;
     const productId = req.body.product;
-    const checkProduct = yield productModel_1.default.findById(productId);
-    const existCart = yield cartModel_1.default.findOne({ user: userId });
-    const existProduct = yield cartModel_1.default.findOne({ user: userId, product: productId });
-    if (!checkProduct) {
-        throw new Error("Product not Found");
-    }
-    if (existCart) {
-        if (existProduct) {
-            throw new Error("Product Already Exist in the Cart");
+    const updatedCart = yield (0, productListService_1.addProduct)(userId, productId, cartModel_1.default);
+    res.status(200).json({
+        status: "success",
+        data: {
+            updatedCart
         }
-        else {
-            existCart.product.push(productId);
-            existCart.save();
-            res.status(200).json({
-                status: "success",
-                data: {
-                    existCart
-                }
-            });
-        }
-    }
-    else {
-        if (existProduct) {
-            throw new Error("Product Already Exist in the Cart");
-        }
-        else {
-            const newCart = yield cartModel_1.default.create({ user: userId, product: productId });
-            res.status(200).json({
-                status: "success",
-                data: {
-                    newCart
-                }
-            });
-        }
-    }
+    });
 }));
 exports.addProductCart = addProductCart;
 const getProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;
-    const getCart = yield cartModel_1.default.findOne({ user: userId });
-    if (!getCart) {
-        throw new Error("No Products Found");
-    }
-    else {
-        res.status(200).json({
-            status: "success",
-            data: {
-                getCart
-            }
-        });
-    }
+    const getCart = yield (0, productListService_1.getProduct)(userId, cartModel_1.default);
+    res.status(200).json({
+        status: "success",
+        data: {
+            getCart
+        }
+    });
 }));
 exports.getProductCart = getProductCart;
 const deleteProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;
     const productId = req.body.product;
-    const getCart = yield cartModel_1.default.findOne({ user: userId });
-    if (!getCart) {
-        throw new Error("Cart is not found");
-    }
-    else {
-        const indexToDelete = getCart.product.indexOf(productId);
-        getCart.product.splice(indexToDelete, 1);
-        yield getCart.save();
-        res.status(200).json({
-            status: "success"
-        });
-    }
+    (0, productListService_1.deleteProduct)(userId, productId, cartModel_1.default);
+    res.status(200).json({
+        status: "success"
+    });
 }));
 exports.deleteProductCart = deleteProductCart;

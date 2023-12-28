@@ -14,8 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
-//console.log(dotenv.config({ path: path.join(__dirname, 'config.env') }));
-console.log(dotenv_1.default.config({ path: './config.env' }));
+dotenv_1.default.config({ path: './config.env' });
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const connect = yield mongoose_1.default.connect(process.env.LOCAL_CONN_STR);

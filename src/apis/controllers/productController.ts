@@ -1,10 +1,11 @@
 import catchAsync from "../utils/asyncErrorHandler"
 import Product from "../models/productModel"
 import { Request, Response } from "express"
+import { createProduct, getAllProducts, getProductByIds, productByCategory } from "../services/productService"
 
 
 const CreateProduct = catchAsync(async (req: Request, res: Response) => {
-  const newProduct = await Product.create(req.body)
+  const newProduct = await createProduct(req.body)
   res.status(200).json({
     status: "success",
     data: {
@@ -14,17 +15,17 @@ const CreateProduct = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getProduct = catchAsync(async (req: Request, res: Response) => {
-  const products = await Product.find()
+  const allProducts = await getAllProducts()
   res.status(200).json({
     status: "success",
     data: {
-      products
+      allProducts
     }
   })
 })
 
 const getProductById = catchAsync(async (req: Request, res: Response) => {
-  const productById = await Product.findById(req.params.id)
+  const productById = await getProductByIds(req.body.id)
   res.status(200).json({
     status: "success",
     data: {
@@ -34,18 +35,13 @@ const getProductById = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getProductByCategory = catchAsync(async (req: Request, res: Response) => {
-  const category = req.params.category
-  const productByCategory = await Product.find({ category })
-  if (productByCategory.length === 0) {
-    throw new Error("Category is not found!!")
-  } else {
-    res.status(200).json({
-      status: "successfull",
-      data: {
-        productByCategory
-      }
-    })
-  }
+  const productCategory = await productByCategory(req.params.category)
+  res.status(200).json({
+    status: "successfull",
+    data: {
+      productCategory
+    }
+  })
 })
 
 export {

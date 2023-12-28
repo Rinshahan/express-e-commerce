@@ -12,20 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsersById = exports.getUsers = void 0;
-const adminService_1 = require("../services/adminService");
-const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
-const getUsers = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield (0, adminService_1.getUserService)();
-    console.log(users);
-    res.status(200).json({
-        status: "success",
-        data: {
-            users
-        }
-    });
-}));
-exports.getUsers = getUsers;
-const getUsersById = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-}));
-exports.getUsersById = getUsersById;
+exports.getUserService = void 0;
+const userModel_1 = __importDefault(require("../models/userModel"));
+const getUserService = () => __awaiter(void 0, void 0, void 0, function* () {
+    return yield userModel_1.default.find();
+});
+exports.getUserService = getUserService;
+const getUsersById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    return;
+});

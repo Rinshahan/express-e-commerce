@@ -12,20 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsersById = exports.getUsers = void 0;
-const adminService_1 = require("../services/adminService");
-const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
-const getUsers = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield (0, adminService_1.getUserService)();
-    console.log(users);
-    res.status(200).json({
-        status: "success",
-        data: {
-            users
-        }
-    });
-}));
-exports.getUsers = getUsers;
-const getUsersById = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-}));
-exports.getUsersById = getUsersById;
+exports.authenticateUser = exports.createUser = void 0;
+const userModel_1 = __importDefault(require("../models/userModel"));
+const jsonwebtoken_1 = __importDefault(require("../utils/jsonwebtoken"));
+const createUser = (userData) => __awaiter(void 0, void 0, void 0, function* () {
+    return userModel_1.default.create(userData);
+});
+exports.createUser = createUser;
+const authenticateUser = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield userModel_1.default.findOne({ username }).select('+password');
+    if (!user || !(yield user.comparePasswordinDb(password, user.password))) {
+        throw new Error("Incorrect username or password");
+    }
+    const token = (0, jsonwebtoken_1.default)(user.email);
+    return { user, token };
+});
+exports.authenticateUser = authenticateUser;

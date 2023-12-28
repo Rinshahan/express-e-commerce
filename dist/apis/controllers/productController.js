@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getProductByCategory = exports.getProductById = exports.getProduct = exports.CreateProduct = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
-const productModel_1 = __importDefault(require("../models/productModel"));
+const productService_1 = require("../services/productService");
 const CreateProduct = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newProduct = yield productModel_1.default.create(req.body);
+    const newProduct = yield (0, productService_1.createProduct)(req.body);
     res.status(200).json({
         status: "success",
         data: {
@@ -26,17 +26,17 @@ const CreateProduct = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(v
 }));
 exports.CreateProduct = CreateProduct;
 const getProduct = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield productModel_1.default.find();
+    const allProducts = yield (0, productService_1.getAllProducts)();
     res.status(200).json({
         status: "success",
         data: {
-            products
+            allProducts
         }
     });
 }));
 exports.getProduct = getProduct;
 const getProductById = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const productById = yield productModel_1.default.findById(req.params.id);
+    const productById = yield (0, productService_1.getProductByIds)(req.body.id);
     res.status(200).json({
         status: "success",
         data: {
@@ -46,18 +46,12 @@ const getProductById = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(
 }));
 exports.getProductById = getProductById;
 const getProductByCategory = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const category = req.params.category;
-    const productByCategory = yield productModel_1.default.find({ category });
-    if (productByCategory.length === 0) {
-        throw new Error("Category is not found!!");
-    }
-    else {
-        res.status(200).json({
-            status: "successfull",
-            data: {
-                productByCategory
-            }
-        });
-    }
+    const productCategory = yield (0, productService_1.productByCategory)(req.params.category);
+    res.status(200).json({
+        status: "successfull",
+        data: {
+            productCategory
+        }
+    });
 }));
 exports.getProductByCategory = getProductByCategory;

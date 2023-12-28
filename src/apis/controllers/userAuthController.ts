@@ -3,11 +3,12 @@ import catchAsync from "../utils/asyncErrorHandler";
 import CustomError from "../utils/customError";
 import generateToken from "../utils/jsonwebtoken";
 import User from "../models/userModel";
+import { authenticateUser, createUser } from "../services/userAuthService";
 
 
 
 export const signUpUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const newUser = await User.create(req.body);
+  const newUser = await createUser(req.body);
   const token = generateToken(newUser.email)
   res.status(201).json({
     status: "success",
@@ -28,21 +29,14 @@ export const loginUser = catchAsync(async (req: Request, res: Response, next: Ne
     return next(error)
   }
 
-  // check user exists with username
+  const { user, token } = await authenticateUser(username, password)
 
-  const loginUser = await User.findOne({ username }).select('+password')
+  res.status(200).json({
+    status: "success",
+    token,
+    user
+  })
 
-  const token = generateToken(loginUser.email)
-
-  if (!loginUser || !(await loginUser.comparePasswordinDb(password, loginUser.password))) {
-    throw new Error("Incorrect username or Password")
-  } else {
-    res.status(200).json({
-      status: "success",
-      token,
-      user: loginUser
-    })
-  }
 })
 
 

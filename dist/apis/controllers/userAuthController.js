@@ -16,9 +16,9 @@ exports.loginUser = exports.signUpUser = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const customError_1 = __importDefault(require("../utils/customError"));
 const jsonwebtoken_1 = __importDefault(require("../utils/jsonwebtoken"));
-const userModel_1 = __importDefault(require("../models/userModel"));
+const userAuthService_1 = require("../services/userAuthService");
 exports.signUpUser = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = yield userModel_1.default.create(req.body);
+    const newUser = yield (0, userAuthService_1.createUser)(req.body);
     const token = (0, jsonwebtoken_1.default)(newUser.email);
     res.status(201).json({
         status: "success",
@@ -36,17 +36,10 @@ exports.loginUser = (0, asyncErrorHandler_1.default)((req, res, next) => __await
         const error = new customError_1.default('Please Provid Username and Password', 400);
         return next(error);
     }
-    // check user exists with username
-    const loginUser = yield userModel_1.default.findOne({ username }).select('+password');
-    const token = (0, jsonwebtoken_1.default)(loginUser.email);
-    if (!loginUser || !(yield loginUser.comparePasswordinDb(password, loginUser.password))) {
-        throw new Error("Incorrect username or Password");
-    }
-    else {
-        res.status(200).json({
-            status: "success",
-            token,
-            user: loginUser
-        });
-    }
+    const { user, token } = yield (0, userAuthService_1.authenticateUser)(username, password);
+    res.status(200).json({
+        status: "success",
+        token,
+        user
+    });
 }));
