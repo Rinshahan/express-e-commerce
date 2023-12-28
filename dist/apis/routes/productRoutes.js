@@ -7,11 +7,14 @@ const express_1 = __importDefault(require("express"));
 const wishListController_1 = require("../controllers/wishListController");
 const productController_1 = require("../controllers/productController");
 const cartController_1 = require("../controllers/cartController");
+const adminController_1 = require("../controllers/adminController");
 const productRouter = express_1.default.Router();
-productRouter.route('/product')
+productRouter.route('/products')
     .get(productController_1.getProduct);
 productRouter.route('/product/:id')
-    .get(productController_1.getProductById);
+    .get(productController_1.getProductById)
+    .put(adminController_1.updateProductById)
+    .delete(adminController_1.deleteProductById);
 productRouter.route('/:id/wishlists')
     .post(wishListController_1.addProductWishList)
     .get(wishListController_1.getProductWishlist)

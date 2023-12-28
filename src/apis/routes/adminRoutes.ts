@@ -10,4 +10,5 @@ adminRoutes.route('/users')
 
 adminRoutes.route('/users/:id')
   .get(getUsersById)
+
 export default adminRoutes

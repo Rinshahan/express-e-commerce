@@ -12,12 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserService = void 0;
+exports.deleteProduct = exports.updateProduct = exports.getUserById = exports.getUserService = void 0;
 const userModel_1 = __importDefault(require("../models/userModel"));
+const productModel_1 = __importDefault(require("../models/productModel"));
 const getUserService = () => __awaiter(void 0, void 0, void 0, function* () {
     return yield userModel_1.default.find();
 });
 exports.getUserService = getUserService;
-const getUsersById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    return;
+const getUserById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield userModel_1.default.findById(userId);
+    if (!user) {
+        throw new Error("No User Found");
+    }
+    else {
+        return user;
+    }
 });
+exports.getUserById = getUserById;
+const updateProduct = (productId, productData) => __awaiter(void 0, void 0, void 0, function* () {
+    const updatedProduct = yield productModel_1.default.findByIdAndUpdate(productId, productData, { new: true });
+    return updatedProduct;
+});
+exports.updateProduct = updateProduct;
+const deleteProduct = (productId) => __awaiter(void 0, void 0, void 0, function* () {
+    yield productModel_1.default.findByIdAndDelete(productId);
+});
+exports.deleteProduct = deleteProduct;

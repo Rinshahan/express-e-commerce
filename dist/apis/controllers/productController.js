@@ -36,7 +36,7 @@ const getProduct = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void
 }));
 exports.getProduct = getProduct;
 const getProductById = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const productById = yield (0, productService_1.getProductByIds)(req.body.id);
+    const productById = yield (0, productService_1.getProductByIds)(req.params.id);
     res.status(200).json({
         status: "success",
         data: {

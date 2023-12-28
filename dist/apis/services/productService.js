@@ -25,7 +25,13 @@ const getAllProducts = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getAllProducts = getAllProducts;
 const getProductByIds = (productId) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield productModel_1.default.findById(productId);
+    const productById = yield productModel_1.default.findById(productId);
+    if (!productById) {
+        throw new Error("No Product Found");
+    }
+    else {
+        return productById;
+    }
 });
 exports.getProductByIds = getProductByIds;
 const productByCategory = (category) => __awaiter(void 0, void 0, void 0, function* () {

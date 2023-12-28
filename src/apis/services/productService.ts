@@ -1,5 +1,6 @@
 import { ObjectId } from "mongoose"
 import Product from "../models/productModel"
+import e from "express"
 
 const createProduct = async (productData: Product): Promise<Product> => {
   const newProduct = await Product.create(productData)
@@ -12,7 +13,12 @@ const getAllProducts = async (): Promise<Product[]> => {
 }
 
 const getProductByIds = async (productId: ObjectId): Promise<Product | undefined> => {
-  return await Product.findById(productId)
+  const productById = await Product.findById(productId)
+  if (!productById) {
+    throw new Error("No Product Found")
+  } else {
+    return productById
+  }
 }
 
 const productByCategory = async (category: string): Promise<Product[]> => {
@@ -33,6 +39,8 @@ const checkProductExist = async (productId: ObjectId): Promise<boolean> => {
     false
   }
 }
+
+
 
 export {
   createProduct,

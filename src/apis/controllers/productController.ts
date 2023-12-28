@@ -25,7 +25,7 @@ const getProduct = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getProductById = catchAsync(async (req: Request, res: Response) => {
-  const productById = await getProductByIds(req.body.id)
+  const productById = await getProductByIds(req.params.id)
   res.status(200).json({
     status: "success",
     data: {
@@ -44,8 +44,12 @@ const getProductByCategory = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+
+
+
 export {
   CreateProduct,
   getProduct,
-  getProductById, getProductByCategory
+  getProductById,
+  getProductByCategory
 }
