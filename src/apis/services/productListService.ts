@@ -1,11 +1,12 @@
 
 import { ObjectId } from "mongoose"
 import { getProductByIds } from "../services/productService"
+import Cart from "../interfaces/cartInterface"
 
 
 
 
-const addProduct = async (userId: string, productId: ObjectId, listModel: any): Promise<any> => {
+const addProduct = async (userId: string, productId: string, listModel: any): Promise<Product> => {
   //check product exist
   const product = await getProductByIds(productId)
 
@@ -22,6 +23,8 @@ const addProduct = async (userId: string, productId: ObjectId, listModel: any): 
     } else {
       //if no existing product push the product
       existingCart.product.push(productId)
+      existingCart.totalPrice += product.price
+
       existingCart.save()
       return existingCart
     }
@@ -33,7 +36,7 @@ const addProduct = async (userId: string, productId: ObjectId, listModel: any): 
 }
 
 
-const getProduct = async (userId: string, listModel: any): Promise<any> => {
+const getProduct = async (userId: string, listModel: any): Promise<Cart> => {
   const getCart = await listModel.findOne({ user: userId })
   if (!getCart) {
     throw new Error("No Cart Found")
@@ -42,13 +45,16 @@ const getProduct = async (userId: string, listModel: any): Promise<any> => {
   }
 }
 
-const deleteProduct = async (userId: string, productId: ObjectId, listModel: any): Promise<void> => {
+const deleteProduct = async (userId: string, productId: string, listModel: any): Promise<void> => {
   const getCart = await listModel.findOne({ user: userId })
   if (!getCart) {
     throw new Error("Cart not found")
   } else {
     const indexToIndelete = getCart.product.indexOf(productId)
+    const removeProduct = getCart.product[indexToIndelete]
     getCart.product.splice(indexToIndelete, 1)
+    const price = (await getProductByIds(removeProduct)).price as unknown as number
+    getCart.totalPrice -= price
     await getCart.save()
   }
 }

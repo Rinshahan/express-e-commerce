@@ -25,11 +25,11 @@ const getProductCart = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id
   const getCart = await getProduct(userId, Cart)
 
-
   res.status(200).json({
     status: "success",
     data: {
-      getCart
+      getCart,
+      totalPrice: getCart.totalPrice
     }
   })
 })

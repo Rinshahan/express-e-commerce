@@ -15,6 +15,15 @@ const getUserById = async (userId: string): Promise<User> => {
   }
 }
 
+const createProduct = async (productData: Product): Promise<Product> => {
+  const createdProduct: Product = await Product.create(productData)
+  if (!createdProduct) {
+    throw new Error("Something went wrong")
+  } else {
+    return createdProduct
+  }
+}
+
 const updateProduct = async (productId: string, productData: Product): Promise<Product> => {
   const updatedProduct = await Product.findByIdAndUpdate(productId, productData, { new: true })
   return updatedProduct
@@ -27,6 +36,7 @@ const deleteProduct = async (productId: string): Promise<any> => {
 export {
   getUserService,
   getUserById,
+  createProduct,
   updateProduct,
   deleteProduct
 }

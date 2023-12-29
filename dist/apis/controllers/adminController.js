@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProductById = exports.updateProductById = exports.getUsersById = exports.getUsers = void 0;
+exports.deleteProductById = exports.updateProductById = exports.createProductByAdmin = exports.getUsersById = exports.getUsers = void 0;
 const adminService_1 = require("../services/adminService");
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
+const productService_1 = require("../services/productService");
 const getUsers = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield (0, adminService_1.getUserService)();
     console.log(users);
@@ -36,6 +37,16 @@ const getUsersById = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(vo
     });
 }));
 exports.getUsersById = getUsersById;
+const createProductByAdmin = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const product = yield (0, productService_1.createProduct)(req.body);
+    res.status(200).json({
+        status: "success",
+        data: {
+            product
+        }
+    });
+}));
+exports.createProductByAdmin = createProductByAdmin;
 const updateProductById = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const updatedProduct = yield (0, adminService_1.updateProduct)(req.params.id, req.body);
     res.status(200).json({

@@ -34,7 +34,8 @@ const getProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(
     res.status(200).json({
         status: "success",
         data: {
-            getCart
+            getCart,
+            totalPrice: getCart.totalPrice
         }
     });
 }));

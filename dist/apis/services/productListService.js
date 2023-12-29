@@ -28,6 +28,7 @@ const addProduct = (userId, productId, listModel) => __awaiter(void 0, void 0, v
         else {
             //if no existing product push the product
             existingCart.product.push(productId);
+            existingCart.totalPrice += product.price;
             existingCart.save();
             return existingCart;
         }
@@ -56,7 +57,10 @@ const deleteProduct = (userId, productId, listModel) => __awaiter(void 0, void 0
     }
     else {
         const indexToIndelete = getCart.product.indexOf(productId);
+        const removeProduct = getCart.product[indexToIndelete];
         getCart.product.splice(indexToIndelete, 1);
+        const price = (yield (0, productService_1.getProductByIds)(removeProduct)).price;
+        getCart.totalPrice -= price;
         yield getCart.save();
     }
 });

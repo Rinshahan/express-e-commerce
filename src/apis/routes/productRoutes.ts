@@ -3,9 +3,10 @@ import { addProductWishList, deleteProductWishlist, getProductWishlist } from ".
 import { getProduct, getProductByCategory, getProductById } from "../controllers/productController";
 import { addProductCart, deleteProductCart, getProductCart } from "../controllers/cartController";
 import protect from "../middlewares/protectRoutes";
-import { deleteProductById, updateProductById } from "../controllers/adminController";
+import { createProductByAdmin, deleteProductById, updateProductById } from "../controllers/adminController";
 const productRouter = express.Router()
 productRouter.route('/products')
+  .post(createProductByAdmin)
   .get(getProduct)
 
 

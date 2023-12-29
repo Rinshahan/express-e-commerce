@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/userModel";
 import { deleteProduct, getUserById, getUserService, updateProduct } from "../services/adminService";
 import catchAsync from "../utils/asyncErrorHandler";
+import { createProduct } from "../services/productService";
 
 const getUsers = catchAsync(async (req: Request, res: Response) => {
   const users: User[] = await getUserService()
@@ -20,6 +21,16 @@ const getUsersById = catchAsync(async (req: Request, res: Response) => {
     status: "success",
     data: {
       user
+    }
+  })
+})
+
+const createProductByAdmin = catchAsync(async (req: Request, res: Response) => {
+  const product: Product = await createProduct(req.body)
+  res.status(200).json({
+    status: "success",
+    data: {
+      product
     }
   })
 })
@@ -47,6 +58,7 @@ const deleteProductById = catchAsync(async (req: Request, res: Response) => {
 export {
   getUsers,
   getUsersById,
+  createProductByAdmin,
   updateProductById,
   deleteProductById
 }

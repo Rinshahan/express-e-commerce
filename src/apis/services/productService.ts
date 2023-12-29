@@ -12,7 +12,7 @@ const getAllProducts = async (): Promise<Product[]> => {
   return allProducts
 }
 
-const getProductByIds = async (productId: ObjectId): Promise<Product | undefined> => {
+const getProductByIds = async (productId: string): Promise<Product | undefined> => {
   const productById = await Product.findById(productId)
   if (!productById) {
     throw new Error("No Product Found")

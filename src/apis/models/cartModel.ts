@@ -13,7 +13,11 @@ const cartSchema = new mongoose.Schema({
       required: true,
       ref: 'Product'
     }
-  ]
+  ],
+  totalPrice: {
+    type: Number,
+    default: 0
+  }
 })
 
 

@@ -10,6 +10,7 @@ const cartController_1 = require("../controllers/cartController");
 const adminController_1 = require("../controllers/adminController");
 const productRouter = express_1.default.Router();
 productRouter.route('/products')
+    .post(adminController_1.createProductByAdmin)
     .get(productController_1.getProduct);
 productRouter.route('/product/:id')
     .get(productController_1.getProductById)
