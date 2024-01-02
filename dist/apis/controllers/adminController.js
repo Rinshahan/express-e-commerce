@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProductById = exports.updateProductById = exports.createProductByAdmin = exports.getUsersById = exports.getUsers = void 0;
+exports.getCategory = exports.deleteProductById = exports.updateProductById = exports.createProductByAdmin = exports.getUsersById = exports.getUsers = void 0;
 const adminService_1 = require("../services/adminService");
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const productService_1 = require("../services/productService");
@@ -64,3 +64,13 @@ const deleteProductById = (0, asyncErrorHandler_1.default)((req, res) => __await
     });
 }));
 exports.deleteProductById = deleteProductById;
+const getCategory = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const products = yield (0, adminService_1.getProductCategory)(req.query.category);
+    res.status(200).json({
+        status: "success",
+        data: {
+            products
+        }
+    });
+}));
+exports.getCategory = getCategory;

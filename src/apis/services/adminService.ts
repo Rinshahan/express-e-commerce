@@ -33,10 +33,21 @@ const deleteProduct = async (productId: string): Promise<any> => {
   await Product.findByIdAndDelete(productId)
 }
 
+const getProductCategory = async (productCategory: any): Promise<Product[]> => {
+  const category = productCategory
+  const product: Product[] = await Product.find({ category })
+  if (product.length === 0) {
+    throw new Error("No Products Found")
+  } else {
+    return product
+  }
+}
+
 export {
   getUserService,
   getUserById,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductCategory
 }

@@ -8,7 +8,6 @@ import Cart from "../models/cartModel";
 const addProductCart = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id
   const productId = req.body.product
-
   const updatedCart = await addProduct(userId, productId, Cart)
   res.status(200).json({
     status: "success",

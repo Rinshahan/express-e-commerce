@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import catchAsync from "../utils/asyncErrorHandler";
 import User from "../models/userModel";
-import { getUsers, getUsersById } from "../controllers/adminController";
+import { getCategory, getUsers, getUsersById } from "../controllers/adminController";
 
 const adminRoutes = express.Router()
 
@@ -10,5 +10,9 @@ adminRoutes.route('/users')
 
 adminRoutes.route('/users/:id')
   .get(getUsersById)
+
+adminRoutes.route('/product')
+  .get(getCategory)
+
 
 export default adminRoutes

@@ -10,4 +10,6 @@ adminRoutes.route('/users')
     .get(adminController_1.getUsers);
 adminRoutes.route('/users/:id')
     .get(adminController_1.getUsersById);
+adminRoutes.route('/product')
+    .get(adminController_1.getCategory);
 exports.default = adminRoutes;

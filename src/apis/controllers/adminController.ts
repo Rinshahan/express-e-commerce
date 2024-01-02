@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
-import { deleteProduct, getUserById, getUserService, updateProduct } from "../services/adminService";
+import { deleteProduct, getProductCategory, getUserById, getUserService, updateProduct } from "../services/adminService";
 import catchAsync from "../utils/asyncErrorHandler";
 import { createProduct } from "../services/productService";
 
@@ -24,6 +24,7 @@ const getUsersById = catchAsync(async (req: Request, res: Response) => {
     }
   })
 })
+
 
 const createProductByAdmin = catchAsync(async (req: Request, res: Response) => {
   const product: Product = await createProduct(req.body)
@@ -52,7 +53,20 @@ const deleteProductById = catchAsync(async (req: Request, res: Response) => {
   res.status(200).json({
     status: "deleted"
   })
+})
 
+const getCategory = catchAsync(async (req: Request, res: Response) => {
+  const products: Product[] = await getProductCategory(req.query.category)
+
+
+
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      products
+    }
+  })
 })
 
 export {
@@ -60,5 +74,6 @@ export {
   getUsersById,
   createProductByAdmin,
   updateProductById,
-  deleteProductById
+  deleteProductById,
+  getCategory
 }

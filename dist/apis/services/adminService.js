@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getUserById = exports.getUserService = void 0;
+exports.getProductCategory = exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getUserById = exports.getUserService = void 0;
 const userModel_1 = __importDefault(require("../models/userModel"));
 const productModel_1 = __importDefault(require("../models/productModel"));
 const getUserService = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -48,3 +48,14 @@ const deleteProduct = (productId) => __awaiter(void 0, void 0, void 0, function*
     yield productModel_1.default.findByIdAndDelete(productId);
 });
 exports.deleteProduct = deleteProduct;
+const getProductCategory = (productCategory) => __awaiter(void 0, void 0, void 0, function* () {
+    const category = productCategory;
+    const product = yield productModel_1.default.find({ category });
+    if (product.length === 0) {
+        throw new Error("No Products Found");
+    }
+    else {
+        return product;
+    }
+});
+exports.getProductCategory = getProductCategory;

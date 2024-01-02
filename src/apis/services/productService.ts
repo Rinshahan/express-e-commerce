@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose"
 import Product from "../models/productModel"
-import e from "express"
+
 
 const createProduct = async (productData: Product): Promise<Product> => {
   const newProduct = await Product.create(productData)
