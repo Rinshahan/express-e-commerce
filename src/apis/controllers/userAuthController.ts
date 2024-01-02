@@ -2,12 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/asyncErrorHandler";
 import CustomError from "../utils/customError";
 import generateToken from "../utils/jsonwebtoken";
-import { authenticateUser, createUser } from "../services/userAuthService";
+import { authenticateUser, createUser } from "../services/AuthService";
 
 
 export const signUpUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const newUser = await createUser(req.body);
-  const token = generateToken(newUser.email)
+  const token = generateToken(newUser._id)
   res.status(201).json({
     status: "success",
     token,

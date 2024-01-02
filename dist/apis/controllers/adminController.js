@@ -12,10 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCategory = exports.deleteProductById = exports.updateProductById = exports.createProductByAdmin = exports.getUsersById = exports.getUsers = void 0;
+exports.loginAdmin = exports.getCategory = exports.deleteProductById = exports.updateProductById = exports.createProductByAdmin = exports.getUsersById = exports.getUsers = void 0;
 const adminService_1 = require("../services/adminService");
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const productService_1 = require("../services/productService");
+const AuthService_1 = require("../services/AuthService");
+//login
+const loginAdmin = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { username, password } = req.body;
+    console.log(process.env.ADMIN_PASSWORD);
+    if (!username && !password) {
+        throw new Error("Please Provide Username or Password");
+    }
+    else {
+        const token = yield (0, AuthService_1.authenticateAdmin)(username, password);
+        if (!token) {
+            res.status(401).json({
+                status: "Hey This is not admin"
+            });
+        }
+        res.status(200).json({
+            status: "Login Successfull",
+            token
+        });
+    }
+}));
+exports.loginAdmin = loginAdmin;
 const getUsers = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield (0, adminService_1.getUserService)();
     console.log(users);

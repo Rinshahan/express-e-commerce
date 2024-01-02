@@ -7,23 +7,24 @@ const express_1 = __importDefault(require("express"));
 const wishListController_1 = require("../controllers/wishListController");
 const productController_1 = require("../controllers/productController");
 const cartController_1 = require("../controllers/cartController");
+const protectRoutes_1 = require("../middlewares/protectRoutes");
 const adminController_1 = require("../controllers/adminController");
 const productRouter = express_1.default.Router();
 productRouter.route('/products')
     .post(adminController_1.createProductByAdmin)
     .get(productController_1.getProduct);
 productRouter.route('/product/:id')
-    .get(productController_1.getProductById)
-    .put(adminController_1.updateProductById)
-    .delete(adminController_1.deleteProductById);
-productRouter.route('/:id/wishlists')
-    .post(wishListController_1.addProductWishList)
-    .get(wishListController_1.getProductWishlist)
-    .delete(wishListController_1.deleteProductWishlist);
+    .get(protectRoutes_1.protect, productController_1.getProductById)
+    .put(protectRoutes_1.requireAdmin, adminController_1.updateProductById)
+    .delete(protectRoutes_1.requireAdmin, adminController_1.deleteProductById);
 productRouter.route('/product/category/:category')
     .get(productController_1.getProductByCategory);
+productRouter.route('/:id/wishlists')
+    .post(protectRoutes_1.protect, wishListController_1.addProductWishList)
+    .get(protectRoutes_1.protect, wishListController_1.getProductWishlist)
+    .delete(protectRoutes_1.protect, wishListController_1.deleteProductWishlist);
 productRouter.route('/:id/cart')
-    .post(cartController_1.addProductCart)
-    .get(cartController_1.getProductCart)
-    .delete(cartController_1.deleteProductCart);
+    .post(protectRoutes_1.protect, cartController_1.addProductCart)
+    .get(protectRoutes_1.protect, cartController_1.getProductCart)
+    .delete(protectRoutes_1.protect, cartController_1.deleteProductCart);
 exports.default = productRouter;

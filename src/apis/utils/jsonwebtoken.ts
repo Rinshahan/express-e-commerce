@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 
-const generateToken = ((email) => {
-  return jwt.sign({ email }, `${process.env.SECRET_STR}`, { expiresIn: 60 * 60 * 24 })
+const generateToken = ((id) => {
+  return jwt.sign({ id, isAdmin: false, role: 'user' }, `${process.env.SECRET_STR}`, { expiresIn: 60 * 60 * 24 })
 })
 
 

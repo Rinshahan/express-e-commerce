@@ -16,10 +16,10 @@ exports.loginUser = exports.signUpUser = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const customError_1 = __importDefault(require("../utils/customError"));
 const jsonwebtoken_1 = __importDefault(require("../utils/jsonwebtoken"));
-const userAuthService_1 = require("../services/userAuthService");
+const AuthService_1 = require("../services/AuthService");
 exports.signUpUser = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = yield (0, userAuthService_1.createUser)(req.body);
-    const token = (0, jsonwebtoken_1.default)(newUser.email);
+    const newUser = yield (0, AuthService_1.createUser)(req.body);
+    const token = (0, jsonwebtoken_1.default)(newUser._id);
     res.status(201).json({
         status: "success",
         token,
@@ -36,7 +36,7 @@ exports.loginUser = (0, asyncErrorHandler_1.default)((req, res, next) => __await
         const error = new customError_1.default('Please Provid Username and Password', 400);
         return next(error);
     }
-    const { user, token } = yield (0, userAuthService_1.authenticateUser)(username, password);
+    const { user, token } = yield (0, AuthService_1.authenticateUser)(username, password);
     res.status(200).json({
         status: "success",
         token,

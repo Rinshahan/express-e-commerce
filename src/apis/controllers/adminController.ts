@@ -3,9 +3,34 @@ import User from "../models/userModel";
 import { deleteProduct, getProductCategory, getUserById, getUserService, updateProduct } from "../services/adminService";
 import catchAsync from "../utils/asyncErrorHandler";
 import { createProduct } from "../services/productService";
+import generateToken from "../utils/jsonwebtoken";
+import { authenticateAdmin } from "../services/AuthService";
+import user from "../interfaces/userInterface";
+
+//login
+
+const loginAdmin = catchAsync(async (req: Request, res: Response) => {
+  const { username, password } = req.body
+  console.log(process.env.ADMIN_PASSWORD);
+
+  if (!username && !password) {
+    throw new Error("Please Provide Username or Password")
+  } else {
+    const token = await authenticateAdmin(username, password)
+    if (!token) {
+      res.status(401).json({
+        status: "Hey This is not admin"
+      })
+    }
+    res.status(200).json({
+      status: "Login Successfull",
+      token
+    })
+  }
+})
 
 const getUsers = catchAsync(async (req: Request, res: Response) => {
-  const users: User[] = await getUserService()
+  const users: user[] = await getUserService()
   console.log(users);
   res.status(200).json({
     status: "success",
@@ -75,5 +100,6 @@ export {
   createProductByAdmin,
   updateProductById,
   deleteProductById,
-  getCategory
+  getCategory,
+  loginAdmin
 }

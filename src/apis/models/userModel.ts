@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator"
 import bcryptjs from "bcryptjs"
+import user from "../interfaces/userInterface";
 
 
 
@@ -48,6 +49,6 @@ userSchema.methods.comparePasswordinDb = async (password: any, passwordDB: strin
 }
 
 
-const User = mongoose.model<User>('User', userSchema)
+const User = mongoose.model<user>('User', userSchema)
 
 export default User

@@ -41,6 +41,9 @@ const getProduct = async (userId: string, listModel: any): Promise<Cart> => {
   if (!getCart) {
     throw new Error("No Cart Found")
   } else {
+    if (getCart.product.length === 0) {
+      throw new Error("No Products Found")
+    }
     return getCart
   }
 }
@@ -48,7 +51,7 @@ const getProduct = async (userId: string, listModel: any): Promise<Cart> => {
 const deleteProduct = async (userId: string, productId: string, listModel: any): Promise<void> => {
   const getCart = await listModel.findOne({ user: userId })
   if (!getCart) {
-    throw new Error("Cart not found")
+    throw new Error(`${listModel} not found`)
   } else {
     const indexToIndelete = getCart.product.indexOf(productId)
     const removeProduct = getCart.product[indexToIndelete]

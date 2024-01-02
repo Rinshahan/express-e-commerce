@@ -46,6 +46,9 @@ const getProduct = (userId, listModel) => __awaiter(void 0, void 0, void 0, func
         throw new Error("No Cart Found");
     }
     else {
+        if (getCart.product.length === 0) {
+            throw new Error("No Products Found");
+        }
         return getCart;
     }
 });
@@ -53,7 +56,7 @@ exports.getProduct = getProduct;
 const deleteProduct = (userId, productId, listModel) => __awaiter(void 0, void 0, void 0, function* () {
     const getCart = yield listModel.findOne({ user: userId });
     if (!getCart) {
-        throw new Error("Cart not found");
+        throw new Error(`${listModel} not found`);
     }
     else {
         const indexToIndelete = getCart.product.indexOf(productId);
