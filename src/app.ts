@@ -5,12 +5,13 @@ import productRouter from "./apis/routes/productRoutes";
 import userAuthRouter from "./apis/routes/userAuthRoutes";
 import cors from 'cors'
 import adminRoutes from "./apis/routes/adminRoutes";
+import orderRoutes from "./apis/routes/orderRoutes";
 const app: Express = express()
-//app.use(cors())
+app.use(cors())
 app.use(express.json())
 
 app.use(morgan('dev'))
-app.use('/api/users', userAuthRouter, productRouter)
+app.use('/api/users', userAuthRouter, productRouter, orderRoutes)
 app.use('/api/admin', productRouter, adminRoutes)
 
 export default app

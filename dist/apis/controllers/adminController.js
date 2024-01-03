@@ -40,7 +40,6 @@ const loginAdmin = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void
 exports.loginAdmin = loginAdmin;
 const getUsers = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield (0, adminService_1.getUserService)();
-    console.log(users);
     res.status(200).json({
         status: "success",
         data: {

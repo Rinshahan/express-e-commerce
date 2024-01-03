@@ -22,5 +22,5 @@ const cartSchema = new mongoose_1.default.Schema({
         default: 0
     }
 });
-const Cart = mongoose_1.default.model('Cart', cartSchema);
-exports.default = Cart;
+const cart = mongoose_1.default.model('Cart', cartSchema);
+exports.default = cart;

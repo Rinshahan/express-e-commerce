@@ -7,11 +7,13 @@ const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const productRoutes_1 = __importDefault(require("./apis/routes/productRoutes"));
 const userAuthRoutes_1 = __importDefault(require("./apis/routes/userAuthRoutes"));
+const cors_1 = __importDefault(require("cors"));
 const adminRoutes_1 = __importDefault(require("./apis/routes/adminRoutes"));
+const orderRoutes_1 = __importDefault(require("./apis/routes/orderRoutes"));
 const app = (0, express_1.default)();
-//app.use(cors())
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));
-app.use('/api/users', userAuthRoutes_1.default, productRoutes_1.default);
+app.use('/api/users', userAuthRoutes_1.default, productRoutes_1.default, orderRoutes_1.default);
 app.use('/api/admin', productRoutes_1.default, adminRoutes_1.default);
 exports.default = app;

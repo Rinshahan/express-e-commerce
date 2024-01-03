@@ -1,12 +1,13 @@
 import { ObjectId } from "mongoose"
 import User from "../models/userModel"
 import Product from "../models/productModel"
+import user from "../interfaces/userInterface"
 
-const getUserService = async (): Promise<User[]> => {
+const getUserService = async (): Promise<user[]> => {
   return await User.find()
 }
 
-const getUserById = async (userId: string): Promise<User> => {
+const getUserById = async (userId: string): Promise<user> => {
   const user = await User.findById(userId)
   if (!user) {
     throw new Error("No User Found")

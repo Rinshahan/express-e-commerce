@@ -31,7 +31,6 @@ const loginAdmin = catchAsync(async (req: Request, res: Response) => {
 
 const getUsers = catchAsync(async (req: Request, res: Response) => {
   const users: user[] = await getUserService()
-  console.log(users);
   res.status(200).json({
     status: "success",
     data: {
