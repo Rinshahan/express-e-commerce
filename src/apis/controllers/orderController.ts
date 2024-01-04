@@ -8,12 +8,16 @@ import Stripe from "stripe";
 const orderProduct = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id
   const findCart = await cart.findOne({ user: userId })
-  const createOrder = await orderAProduct(findCart)
-  await cart.deleteOne({ id: findCart.id })
-  res.status(200).json({
-    status: "success",
-    orders: createOrder
-  })
+  const session = await orderAProduct(findCart)
+  if (session.status === 'complete') {
+    await cart.deleteOne({ id: findCart.id })
+    res.status(200).json({
+      status: "success",
+      session: session.url
+    })
+  }
+
+
 })
 
 export {

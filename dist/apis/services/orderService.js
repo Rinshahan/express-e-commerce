@@ -14,39 +14,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderAProduct = void 0;
 const stripe_1 = __importDefault(require("stripe"));
-const orderModel_1 = __importDefault(require("../models/orderModel"));
-const stripe = new stripe_1.default(process.env.STRIPE_TEST_SECRET_KEY, {
-    apiVersion: '2023-10-16'
-});
-function generateOrderId() {
-    const timestamp = Date.now();
-    const randomPart = Math.random().toString(36).substring(2, 7); // 5 random characters
-    return `ORD-${timestamp}-${randomPart}`;
-}
+const productModel_1 = __importDefault(require("../models/productModel"));
+const userModel_1 = __importDefault(require("../models/userModel"));
 const orderAProduct = (userCart) => __awaiter(void 0, void 0, void 0, function* () {
-    //console.log();
-    const paymentIntent = yield stripe.paymentIntents.create({
-        amount: userCart.totalPrice * 100, // Convert to cents
-        currency: "INR",
+    const stripe = new stripe_1.default(process.env.STRIPE_TEST_SECRET_KEY, {
+        apiVersion: '2023-10-16'
     });
-    const paymentMethodToken = "tok_visa";
-    const confirmedPayment = yield stripe.paymentIntents.confirm(paymentIntent.id, { payment_method: paymentMethodToken });
-    if (confirmedPayment.status === "succeeded") {
-        const order = new orderModel_1.default({
-            user: userCart.user,
-            products: userCart.product,
-            purchaseDate: Date.now(),
-            orderId: generateOrderId(),
-            totalPrice: userCart.totalPrice,
-            totalItems: userCart.product.length,
-            paymentMethod: confirmedPayment.payment_method
+    try {
+        const userCartProduct = yield productModel_1.default.find({ _id: userCart.product });
+        const cartUser = yield userModel_1.default.findOne(userCart.user);
+        const lineItems = userCartProduct.map((product) => {
+            return {
+                price_data: {
+                    currency: "inr",
+                    product_data: {
+                        name: product.title,
+                        description: product.description
+                    },
+                    customer: userCart.user,
+                    unit_amount: parseInt(product.price) * 100
+                },
+                quantity: 1,
+            };
         });
-        yield order.save();
-        // 5. Update Inventory (if applicable)
-        // ... Code to reduce product quantities based on cart items
-        return order;
+        const customer = yield stripe.customers.create({
+            name: cartUser.username,
+            address: {
+                line1: '123 Main St',
+                city: 'Some City',
+                state: 'Some State',
+                postal_code: '12345',
+                country: 'IN' // Provide the country code for India
+            }
+        });
+        const session = yield stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items: lineItems,
+            mode: "payment",
+            success_url: "http://localhost:9000/api/users/payment/success",
+            cancel_url: "http://localhost:9000/api/users/payment/cancel",
+            customer: customer.id
+        });
+        return session;
     }
-    else {
+    catch (err) {
+        console.log(err);
         throw new Error("Payment Failed");
     }
 });

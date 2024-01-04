@@ -19,11 +19,13 @@ const cartModel_1 = __importDefault(require("../models/cartModel"));
 const orderProduct = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;
     const findCart = yield cartModel_1.default.findOne({ user: userId });
-    const createOrder = yield (0, orderService_1.orderAProduct)(findCart);
-    yield cartModel_1.default.deleteOne({ id: findCart.id });
-    res.status(200).json({
-        status: "success",
-        orders: createOrder
-    });
+    const session = yield (0, orderService_1.orderAProduct)(findCart);
+    if (session.status === 'complete') {
+        yield cartModel_1.default.deleteOne({ id: findCart.id });
+        res.status(200).json({
+            status: "success",
+            session: session.url
+        });
+    }
 }));
 exports.orderProduct = orderProduct;
