@@ -25,12 +25,12 @@ const addProduct = async (userId: string, productId: string, listModel: any): Pr
       existingCart.product.push(productId)
       existingCart.totalPrice += product.price
 
-      existingCart.save()
+      await existingCart.save()
       return existingCart
     }
   } else {
     // if no existing cart then
-    const newCart = await listModel.create({ user: userId, productId: [productId] })
+    const newCart = await listModel.create({ user: userId, product: [productId], totalPrice: product.price })
     return newCart
   }
 }

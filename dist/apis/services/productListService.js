@@ -29,13 +29,13 @@ const addProduct = (userId, productId, listModel) => __awaiter(void 0, void 0, v
             //if no existing product push the product
             existingCart.product.push(productId);
             existingCart.totalPrice += product.price;
-            existingCart.save();
+            yield existingCart.save();
             return existingCart;
         }
     }
     else {
         // if no existing cart then
-        const newCart = yield listModel.create({ user: userId, productId: [productId] });
+        const newCart = yield listModel.create({ user: userId, product: [productId], totalPrice: product.price });
         return newCart;
     }
 });
