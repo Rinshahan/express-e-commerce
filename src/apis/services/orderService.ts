@@ -1,12 +1,8 @@
 import Stripe from "stripe";
 import Cart from "../interfaces/cartInterface";
-import Order from "../interfaces/orderInterface";
-import catchAsync from "../utils/asyncErrorHandler";
 import Orders from "../models/orderModel";
 import Product from "../models/productModel";
 import User from "../models/userModel";
-
-
 
 
 
@@ -15,8 +11,10 @@ const orderAProduct = async (userCart: Cart) => {
     apiVersion: '2023-10-16'
   })
   try {
-
     const userCartProduct = await Product.find({ _id: userCart.product })
+    if (userCartProduct.length === 0) {
+      throw new Error("Cart Not Found")
+    }
     const cartUser = await User.findOne(userCart.user)
     const lineItems = userCartProduct.map((product) => {
       return {
@@ -55,11 +53,22 @@ const orderAProduct = async (userCart: Cart) => {
     })
 
 
-    return session
+
+    if (session) {
+      const order = new Orders({
+        user: userCart.user,
+        products: userCartProduct,
+        orderId: session.id,
+        totalPrice: userCart.totalPrice,
+        totalItems: userCart.product.length,
+        orderStatus: session.payment_status
+      })
+      await order.save()
+      return session
+    }
 
   } catch (err) {
-    console.log(err);
-    throw new Error("Payment Failed")
+    throw new Error(err)
   }
 
 

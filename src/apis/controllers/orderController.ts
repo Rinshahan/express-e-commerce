@@ -9,15 +9,18 @@ const orderProduct = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id
   const findCart = await cart.findOne({ user: userId })
   const session = await orderAProduct(findCart)
-  if (session.status === 'complete') {
-    await cart.deleteOne({ id: findCart.id })
+  if (session) {
+    await cart.deleteOne({ user: userId })
     res.status(200).json({
       status: "success",
       session: session.url
     })
   }
-
-
+  else {
+    res.status(500).json({
+      status: "failed"
+    })
+  }
 })
 
 export {

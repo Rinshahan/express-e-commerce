@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderAProduct = void 0;
 const stripe_1 = __importDefault(require("stripe"));
+const orderModel_1 = __importDefault(require("../models/orderModel"));
 const productModel_1 = __importDefault(require("../models/productModel"));
 const userModel_1 = __importDefault(require("../models/userModel"));
 const orderAProduct = (userCart) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,6 +23,9 @@ const orderAProduct = (userCart) => __awaiter(void 0, void 0, void 0, function* 
     });
     try {
         const userCartProduct = yield productModel_1.default.find({ _id: userCart.product });
+        if (userCartProduct.length === 0) {
+            throw new Error("Cart Not Found");
+        }
         const cartUser = yield userModel_1.default.findOne(userCart.user);
         const lineItems = userCartProduct.map((product) => {
             return {
@@ -55,11 +59,21 @@ const orderAProduct = (userCart) => __awaiter(void 0, void 0, void 0, function* 
             cancel_url: "http://localhost:9000/api/users/payment/cancel",
             customer: customer.id
         });
-        return session;
+        if (session) {
+            const order = new orderModel_1.default({
+                user: userCart.user,
+                products: userCartProduct,
+                orderId: session.id,
+                totalPrice: userCart.totalPrice,
+                totalItems: userCart.product.length,
+                orderStatus: session.payment_status
+            });
+            yield order.save();
+            return session;
+        }
     }
     catch (err) {
-        console.log(err);
-        throw new Error("Payment Failed");
+        throw new Error(err);
     }
 });
 exports.orderAProduct = orderAProduct;

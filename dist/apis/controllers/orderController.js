@@ -20,11 +20,16 @@ const orderProduct = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(vo
     const userId = req.params.id;
     const findCart = yield cartModel_1.default.findOne({ user: userId });
     const session = yield (0, orderService_1.orderAProduct)(findCart);
-    if (session.status === 'complete') {
-        yield cartModel_1.default.deleteOne({ id: findCart.id });
+    if (session) {
+        yield cartModel_1.default.deleteOne({ user: userId });
         res.status(200).json({
             status: "success",
             session: session.url
+        });
+    }
+    else {
+        res.status(500).json({
+            status: "failed"
         });
     }
 }));
