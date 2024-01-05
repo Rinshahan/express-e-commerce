@@ -1,5 +1,4 @@
 import catchAsync from "../utils/asyncErrorHandler"
-import Product from "../models/productModel"
 import { Request, Response } from "express"
 import { createProduct, getAllProducts, getProductByIds, productByCategory } from "../services/productService"
 
