@@ -3,17 +3,17 @@ import Product from "../models/productModel"
 
 
 const createProduct = async (productData: Product): Promise<Product> => {
-  const newProduct = await Product.create(productData)
+  const newProduct: Product = await Product.create(productData)
   return newProduct
 }
 
 const getAllProducts = async (): Promise<Product[]> => {
-  const allProducts = await Product.find()
+  const allProducts: Product[] = await Product.find()
   return allProducts
 }
 
 const getProductByIds = async (productId: string): Promise<Product | undefined> => {
-  const productById = await Product.findById(productId)
+  const productById: Product = await Product.findById(productId)
   if (!productById) {
     throw new Error("No Product Found")
   } else {
@@ -22,7 +22,7 @@ const getProductByIds = async (productId: string): Promise<Product | undefined> 
 }
 
 const productByCategory = async (category: string): Promise<Product[]> => {
-  const productsByCategory = await Product.find({ category })
+  const productsByCategory: Product[] = await Product.find({ category })
   if (productsByCategory.length === 0) {
     throw new Error("Category is not found!!")
   } else {
@@ -32,7 +32,7 @@ const productByCategory = async (category: string): Promise<Product[]> => {
 
 
 const checkProductExist = async (productId: ObjectId): Promise<boolean> => {
-  const getProduct = await Product.findById(productId)
+  const getProduct: Product = await Product.findById(productId)
   if (getProduct) {
     return true
   } else {

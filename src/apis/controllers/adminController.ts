@@ -51,7 +51,7 @@ const getUsersById = catchAsync(async (req: Request, res: Response) => {
 
 
 const createProductByAdmin = catchAsync(async (req: Request, res: Response) => {
-  console.log(req.body);
+
 
   const product: Product = await createProduct(req.body)
   res.status(200).json({
