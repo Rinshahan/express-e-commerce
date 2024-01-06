@@ -59,6 +59,7 @@ const getUsersById = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(vo
 }));
 exports.getUsersById = getUsersById;
 const createProductByAdmin = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
     const product = yield (0, productService_1.createProduct)(req.body);
     res.status(200).json({
         status: "success",
