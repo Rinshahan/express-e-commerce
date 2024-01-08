@@ -25,8 +25,12 @@ cloud.config({
 })
 
 const productImageUpload = (req: Request, res: Response, next: NextFunction) => {
+
+
   upload.single('image')(req, res, async (err) => {
     if (err) {
+      console.log(err);
+
       next(new CustomError('Not Uploaded', 401))
     }
     try {
@@ -44,6 +48,8 @@ const productImageUpload = (req: Request, res: Response, next: NextFunction) => 
       next()
     }
     catch (err) {
+      console.log(err);
+
       next(new CustomError(`${err}`, 401))
     }
   })

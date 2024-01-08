@@ -3,6 +3,6 @@ interface Product {
   description: string,
   price: string,
   image: string,
-  categroy: string,
+  category: string,
   isDeleted: string
 }

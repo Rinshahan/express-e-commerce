@@ -15,7 +15,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
-app.use(productImageUpload)
+//app.use(productImageUpload)
 app.use('/api/admin', productRouter, adminRoutes)
 // app.post('/upload', (req, res) => {
 //   console.log(req.body);

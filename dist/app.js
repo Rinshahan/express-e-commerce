@@ -10,14 +10,13 @@ const userAuthRoutes_1 = __importDefault(require("./apis/routes/userAuthRoutes")
 const cors_1 = __importDefault(require("cors"));
 const adminRoutes_1 = __importDefault(require("./apis/routes/adminRoutes"));
 const orderRoutes_1 = __importDefault(require("./apis/routes/orderRoutes"));
-const multer_1 = require("./apis/middlewares/multer");
 //import { productImageUpload } from "./apis/middlewares/multer";
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, morgan_1.default)('dev'));
-app.use(multer_1.productImageUpload);
+//app.use(productImageUpload)
 app.use('/api/admin', productRoutes_1.default, adminRoutes_1.default);
 // app.post('/upload', (req, res) => {
 //   console.log(req.body);
