@@ -33,6 +33,8 @@ const getProductById = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+
+
 const getProductByCategory = catchAsync(async (req: Request, res: Response) => {
   const productCategory = await productByCategory(req.params.category)
   res.status(200).json({

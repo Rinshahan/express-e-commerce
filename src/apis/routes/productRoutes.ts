@@ -11,7 +11,7 @@ productRouter.route('/products')
 
 
 productRouter.route('/product/:id')
-  .get(protect, getProductById)
+  .get(getProductById)
   .put(requireAdmin, updateProductById)
   .delete(requireAdmin, deleteProductById)
 

@@ -14,7 +14,7 @@ productRouter.route('/products')
     .post(adminController_1.createProductByAdmin)
     .get(productController_1.getProduct);
 productRouter.route('/product/:id')
-    .get(protectRoutes_1.protect, productController_1.getProductById)
+    .get(productController_1.getProductById)
     .put(protectRoutes_1.requireAdmin, adminController_1.updateProductById)
     .delete(protectRoutes_1.requireAdmin, adminController_1.deleteProductById);
 productRouter.route('/product/category/:category')
