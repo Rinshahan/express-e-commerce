@@ -9,14 +9,15 @@ const productController_1 = require("../controllers/productController");
 const cartController_1 = require("../controllers/cartController");
 const protectRoutes_1 = require("../middlewares/protectRoutes");
 const adminController_1 = require("../controllers/adminController");
+const multer_1 = require("../middlewares/multer");
 const productRouter = express_1.default.Router();
 productRouter.route('/products')
-    .post(adminController_1.createProductByAdmin)
+    .post(multer_1.productImageUpload, adminController_1.createProductByAdmin)
     .get(productController_1.getProduct);
 productRouter.route('/product/:id')
     .get(productController_1.getProductById)
-    .put(protectRoutes_1.requireAdmin, adminController_1.updateProductById)
-    .delete(protectRoutes_1.requireAdmin, adminController_1.deleteProductById);
+    .put(adminController_1.updateProductById)
+    .delete(adminController_1.deleteProductById);
 productRouter.route('/product/category/:category')
     .get(productController_1.getProductByCategory);
 productRouter.route('/:id/wishlists')
