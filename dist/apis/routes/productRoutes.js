@@ -15,7 +15,7 @@ productRouter.route('/products')
     .post(multer_1.productImageUpload, adminController_1.createProductByAdmin)
     .get(productController_1.getProduct);
 productRouter.route('/product/:id')
-    .get(productController_1.getProductById)
+    .get(protectRoutes_1.protect, productController_1.getProductById)
     .put(adminController_1.updateProductById)
     .delete(adminController_1.deleteProductById);
 productRouter.route('/product/category/:category')

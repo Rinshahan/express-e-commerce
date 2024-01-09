@@ -12,7 +12,7 @@ productRouter.route('/products')
 
 
 productRouter.route('/product/:id')
-  .get(getProductById)
+  .get(protect, getProductById)
   .put(updateProductById)
   .delete(deleteProductById)
 

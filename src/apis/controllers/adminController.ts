@@ -3,7 +3,6 @@ import User from "../models/userModel";
 import { deleteProduct, getProductCategory, getUserById, getUserService, updateProduct } from "../services/adminService";
 import catchAsync from "../utils/asyncErrorHandler";
 import { createProduct } from "../services/productService";
-import generateToken from "../utils/jsonwebtoken";
 import { authenticateAdmin } from "../services/AuthService";
 import user from "../interfaces/userInterface";
 

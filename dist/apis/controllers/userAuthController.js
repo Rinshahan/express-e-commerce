@@ -22,7 +22,7 @@ exports.signUpUser = (0, asyncErrorHandler_1.default)((req, res, next) => __awai
     const token = (0, jsonwebtoken_1.default)(newUser._id);
     res.status(201).json({
         status: "success",
-        token,
+        token: { token },
         data: {
             User: newUser
         }

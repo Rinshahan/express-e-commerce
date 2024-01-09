@@ -6,11 +6,12 @@ import { authenticateUser, createUser } from "../services/AuthService";
 
 
 export const signUpUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+
   const newUser = await createUser(req.body);
   const token = generateToken(newUser._id)
   res.status(201).json({
     status: "success",
-    token,
+    token: { token },
     data: {
       User: newUser
     }
