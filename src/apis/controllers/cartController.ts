@@ -18,8 +18,6 @@ const addProductCart = catchAsync(async (req: Request, res: Response) => {
 })
 
 
-
-
 const getProductCart = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id
   const getCart = await getProduct(userId, Cart)
@@ -33,13 +31,14 @@ const getProductCart = catchAsync(async (req: Request, res: Response) => {
 })
 
 const deleteProductCart = catchAsync(async (req: Request, res: Response) => {
-  const userId = req.params.id
-  const productId = req.body.product
+  const userId: string = req.params.id
+  const productId = req.body.productId
+  console.log(productId);
+
   deleteProduct(userId, productId, Cart)
   res.status(200).json({
     status: "success"
   })
-
 })
 
 

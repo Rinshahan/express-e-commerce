@@ -54,6 +54,8 @@ const deleteProduct = async (userId: string, productId: string, listModel: any):
     throw new Error(`${listModel} not found`)
   } else {
     const indexToIndelete = getCart.product.indexOf(productId)
+    console.log(indexToIndelete);
+
     const removeProduct = getCart.product[indexToIndelete]
     getCart.product.splice(indexToIndelete, 1)
     const price = (await getProductByIds(removeProduct)).price as unknown as number

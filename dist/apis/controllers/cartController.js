@@ -42,7 +42,8 @@ const getProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(
 exports.getProductCart = getProductCart;
 const deleteProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;
-    const productId = req.body.product;
+    const productId = req.body.productId;
+    console.log(productId);
     (0, productListService_1.deleteProduct)(userId, productId, cartModel_1.default);
     res.status(200).json({
         status: "success"

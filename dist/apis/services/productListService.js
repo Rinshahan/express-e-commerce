@@ -60,6 +60,7 @@ const deleteProduct = (userId, productId, listModel) => __awaiter(void 0, void 0
     }
     else {
         const indexToIndelete = getCart.product.indexOf(productId);
+        console.log(indexToIndelete);
         const removeProduct = getCart.product[indexToIndelete];
         getCart.product.splice(indexToIndelete, 1);
         const price = (yield (0, productService_1.getProductByIds)(removeProduct)).price;
