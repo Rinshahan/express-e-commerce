@@ -15,7 +15,7 @@ const orderAProduct = async (userCart: Cart) => {
     if (userCartProduct.length === 0) {
       throw new Error("Cart Not Found")
     }
-    const cartUser = await User.findOne(userCart.user)
+    const cartUser = await User.findOne({ _id: userCart.user })
     const lineItems = userCartProduct.map((product) => {
       return {
         price_data: {

@@ -7,7 +7,9 @@ import Cart from "../models/cartModel";
 
 const addProductCart = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id
-  const productId = req.body.product
+  const productId = req.body.productId
+  console.log(productId);
+
   const updatedCart = await addProduct(userId, productId, Cart)
   res.status(200).json({
     status: "success",
@@ -32,7 +34,8 @@ const getProductCart = catchAsync(async (req: Request, res: Response) => {
 
 const deleteProductCart = catchAsync(async (req: Request, res: Response) => {
   const userId: string = req.params.id
-  const productId = req.body.productId
+  const productId: string = req.body.productId
+
   console.log(productId);
 
   deleteProduct(userId, productId, Cart)

@@ -18,7 +18,8 @@ const productListService_1 = require("../services/productListService");
 const cartModel_1 = __importDefault(require("../models/cartModel"));
 const addProductCart = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;
-    const productId = req.body.product;
+    const productId = req.body.productId;
+    console.log(productId);
     const updatedCart = yield (0, productListService_1.addProduct)(userId, productId, cartModel_1.default);
     res.status(200).json({
         status: "success",

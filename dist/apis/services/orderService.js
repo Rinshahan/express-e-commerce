@@ -26,7 +26,7 @@ const orderAProduct = (userCart) => __awaiter(void 0, void 0, void 0, function* 
         if (userCartProduct.length === 0) {
             throw new Error("Cart Not Found");
         }
-        const cartUser = yield userModel_1.default.findOne(userCart.user);
+        const cartUser = yield userModel_1.default.findOne({ _id: userCart.user });
         const lineItems = userCartProduct.map((product) => {
             return {
                 price_data: {
