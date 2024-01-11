@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.signUpUser = void 0;
+exports.logoutUser = exports.loginUser = exports.signUpUser = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const customError_1 = __importDefault(require("../utils/customError"));
 const jsonwebtoken_1 = __importDefault(require("../utils/jsonwebtoken"));
@@ -41,5 +41,11 @@ exports.loginUser = (0, asyncErrorHandler_1.default)((req, res, next) => __await
         status: "success",
         token,
         user
+    });
+}));
+exports.logoutUser = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    res.status(200).json({
+        status: "success",
+        message: "Logged Out"
     });
 }));

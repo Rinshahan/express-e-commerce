@@ -19,13 +19,12 @@ const productService_1 = require("../services/productService");
 const AuthService_1 = require("../services/AuthService");
 //login
 const loginAdmin = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, password } = req.body;
-    console.log(process.env.ADMIN_PASSWORD);
-    if (!username && !password) {
+    const admin = req.body;
+    if (!admin.username && !admin.password) {
         throw new Error("Please Provide Username or Password");
     }
     else {
-        const token = yield (0, AuthService_1.authenticateAdmin)(username, password);
+        const token = yield (0, AuthService_1.authenticateAdmin)(admin.username, admin.password);
         if (!token) {
             res.status(401).json({
                 status: "Hey This is not admin"

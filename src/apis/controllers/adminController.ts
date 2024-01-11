@@ -9,13 +9,12 @@ import user from "../interfaces/userInterface";
 //login
 
 const loginAdmin = catchAsync(async (req: Request, res: Response) => {
-  const { username, password } = req.body
-  console.log(process.env.ADMIN_PASSWORD);
+  const admin: Admin = req.body
 
-  if (!username && !password) {
+  if (!admin.username && !admin.password) {
     throw new Error("Please Provide Username or Password")
   } else {
-    const token = await authenticateAdmin(username, password)
+    const token = await authenticateAdmin(admin.username, admin.password)
     if (!token) {
       res.status(401).json({
         status: "Hey This is not admin"

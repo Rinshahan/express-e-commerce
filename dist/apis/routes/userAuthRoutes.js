@@ -10,4 +10,6 @@ userAuthRouter.route('/register')
     .post(userAuthController_1.signUpUser);
 userAuthRouter.route('/login')
     .post(userAuthController_1.loginUser);
+userAuthRouter.route('/logout')
+    .get(userAuthController_1.logoutUser);
 exports.default = userAuthRouter;

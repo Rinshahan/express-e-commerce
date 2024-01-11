@@ -35,6 +35,13 @@ export const loginUser = catchAsync(async (req: Request, res: Response, next: Ne
   })
 })
 
+export const logoutUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  res.status(200).json({
+    status: "success",
+    message: "Logged Out"
+  })
+})
+
 
 
 
