@@ -26,7 +26,6 @@ cloud.config({
 
 const productImageUpload = (req: Request, res: Response, next: NextFunction) => {
 
-
   upload.single('image')(req, res, async (err) => {
     if (err) {
       console.log(err);
@@ -37,7 +36,6 @@ const productImageUpload = (req: Request, res: Response, next: NextFunction) => 
       const result = await cloud.uploader.upload(req.file.path, {
         folder: "products"
       })
-      console.log(req.file.path);
 
       req.body.image = result.secure_url;
       // fs.unlink(req.file.path, (unlinker) => {

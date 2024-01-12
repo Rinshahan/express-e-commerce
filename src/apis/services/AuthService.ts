@@ -16,10 +16,10 @@ const authenticateUser = async (username: string, password: string): Promise<{ u
   return { user, token }
 }
 
-const authenticateAdmin = async (username: string, password: string): Promise<{ token: string }> => {
+const authenticateAdmin = async (username: string, password: string) => {
   if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
     const token = jwt.sign({ username, isAdmin: true, role: 'admin' }, process.env.SECRET_STR, { expiresIn: 60 * 60 * 24 })
-    return { token }
+    return token
   }
 }
 

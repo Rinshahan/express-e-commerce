@@ -4,7 +4,7 @@ import { createProduct, getAllProducts, getProductByIds, productByCategory } fro
 
 
 const CreateProduct = catchAsync(async (req: Request, res: Response) => {
-  const newProduct = await createProduct(req.body)
+  const newProduct: Product = await createProduct(req.body)
   res.status(200).json({
     status: "success",
     data: {
@@ -14,7 +14,7 @@ const CreateProduct = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getProduct = catchAsync(async (req: Request, res: Response) => {
-  const allProducts = await getAllProducts()
+  const allProducts: Product[] = await getAllProducts()
   res.status(200).json({
     status: "success",
     data: {
@@ -24,7 +24,7 @@ const getProduct = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getProductById = catchAsync(async (req: Request, res: Response) => {
-  const productById = await getProductByIds(req.params.id)
+  const productById: Product = await getProductByIds(req.params.id)
   res.status(200).json({
     status: "success",
     data: {
@@ -36,7 +36,7 @@ const getProductById = catchAsync(async (req: Request, res: Response) => {
 
 
 const getProductByCategory = catchAsync(async (req: Request, res: Response) => {
-  const productCategory = await productByCategory(req.params.category)
+  const productCategory: Product[] = await productByCategory(req.params.category)
   res.status(200).json({
     status: "successfull",
     data: {

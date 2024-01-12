@@ -42,7 +42,6 @@ const productImageUpload = (req, res, next) => {
             const result = yield cloud.uploader.upload(req.file.path, {
                 folder: "products"
             });
-            console.log(req.file.path);
             req.body.image = result.secure_url;
             // fs.unlink(req.file.path, (unlinker) => {
             //   if (unlinker) {

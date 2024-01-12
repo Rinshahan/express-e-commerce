@@ -1,9 +1,10 @@
 
-import { ObjectId } from "mongoose"
+import { Model, ObjectId } from "mongoose"
 import { getProductByIds } from "../services/productService"
 import Cart from "../interfaces/cartInterface"
+import WishList from "../interfaces/wishListInterface"
 
-
+type listModel = Cart | WishList
 
 
 const addProduct = async (userId: string, productId: string, listModel: any): Promise<Product> => {

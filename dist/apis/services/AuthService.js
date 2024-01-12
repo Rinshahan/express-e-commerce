@@ -32,7 +32,7 @@ exports.authenticateUser = authenticateUser;
 const authenticateAdmin = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
     if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
         const token = jsonwebtoken_2.default.sign({ username, isAdmin: true, role: 'admin' }, process.env.SECRET_STR, { expiresIn: 60 * 60 * 24 });
-        return { token };
+        return token;
     }
 });
 exports.authenticateAdmin = authenticateAdmin;
