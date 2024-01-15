@@ -10,7 +10,6 @@ const userAuthRoutes_1 = __importDefault(require("./apis/routes/userAuthRoutes")
 const cors_1 = __importDefault(require("cors"));
 const adminRoutes_1 = __importDefault(require("./apis/routes/adminRoutes"));
 const orderRoutes_1 = __importDefault(require("./apis/routes/orderRoutes"));
-//import { productImageUpload } from "./apis/middlewares/multer";
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
