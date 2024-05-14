@@ -7,10 +7,9 @@ import WishList from "../interfaces/wishListInterface"
 type listModel = Cart | WishList
 
 
-const addProduct = async (userId: string, productId: string, listModel: any): Promise<Product> => {
+const addProduct = async (userId: string, productId: string, listModel: any): Promise<listModel> => {
   //check product exist
   const product = await getProductByIds(productId)
-
   if (!product) {
     throw new Error("Product Not Found")
   }

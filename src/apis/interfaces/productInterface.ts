@@ -1,4 +1,4 @@
-interface Product {
+export interface Products {
   _id: string
   title: String,
   description: string,

@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import path from "path"
 
 
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: './.env' });
 
 const connectDB = async () => {
   try {

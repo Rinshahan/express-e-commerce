@@ -1,10 +1,11 @@
 import catchAsync from "../utils/asyncErrorHandler"
 import { Request, Response } from "express"
 import { createProduct, getAllProducts, getProductByIds, productByCategory } from "../services/productService"
+import { Products } from "../interfaces/productInterface"
 
 
 const CreateProduct = catchAsync(async (req: Request, res: Response) => {
-  const newProduct: Product = await createProduct(req.body)
+  const newProduct: Products = await createProduct(req.body)
   res.status(200).json({
     status: "success",
     data: {
@@ -14,7 +15,7 @@ const CreateProduct = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getProduct = catchAsync(async (req: Request, res: Response) => {
-  const allProducts: Product[] = await getAllProducts()
+  const allProducts: Products[] = await getAllProducts()
   res.status(200).json({
     status: "success",
     data: {
@@ -24,7 +25,7 @@ const getProduct = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getProductById = catchAsync(async (req: Request, res: Response) => {
-  const productById: Product = await getProductByIds(req.params.id)
+  const productById: Products = await getProductByIds(req.params.id)
   res.status(200).json({
     status: "success",
     data: {
@@ -36,7 +37,7 @@ const getProductById = catchAsync(async (req: Request, res: Response) => {
 
 
 const getProductByCategory = catchAsync(async (req: Request, res: Response) => {
-  const productCategory: Product[] = await productByCategory(req.params.category)
+  const productCategory: Products[] = await productByCategory(req.params.category)
   res.status(200).json({
     status: "successfull",
     data: {
